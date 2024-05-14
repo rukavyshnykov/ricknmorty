@@ -13,7 +13,7 @@ export const Layout = () => {
         <img className={'w-40'} src={logo} />
       </div>
       <div className={'mb-8 mt-8 w-full'}>
-        <div className={'flex content-center mx-auto my-0 max-w-7xl'}>
+        <div className={'flex justify-center mx-auto my-0 max-w-7xl'}>
           <Characters />
         </div>
       </div>

@@ -8,14 +8,22 @@ export const Pagination = ({ info, onNext, onPrev, page, setPage }: PagiantionPr
   const getSortVariant = (curPage: number) => (curPage === page ? 'primary' : 'secondary')
 
   if (pages === 1) {
-    return <Button variant={getSortVariant(1)}>{page}</Button>
+    return (
+      <Button onClick={() => setPage(1)} variant={getSortVariant(1)}>
+        {page}
+      </Button>
+    )
   }
   if (pages === 2) {
     return (
       <div className={'flex'}>
-        <Button variant={getSortVariant(1)}>{1}</Button>
+        <Button onClick={() => setPage(1)} variant={getSortVariant(1)}>
+          {1}
+        </Button>
 
-        <Button variant={getSortVariant(pages)}>{pages}</Button>
+        <Button onClick={() => setPage(pages)} variant={getSortVariant(pages)}>
+          {pages}
+        </Button>
       </div>
     )
   }
@@ -26,13 +34,17 @@ export const Pagination = ({ info, onNext, onPrev, page, setPage }: PagiantionPr
         <Button disabled={!prev && true} onClick={() => onPrev()} variant={'secondary'}>
           prev
         </Button>
-        <Button variant={getSortVariant(1)}>{1}</Button>
+        <Button onClick={() => setPage(1)} variant={getSortVariant(1)}>
+          {1}
+        </Button>
         {arrayRange(2, pages - 1, 1).map(el => (
-          <Button key={el} variant={getSortVariant(el)}>
+          <Button key={el} onClick={() => setPage(el)} variant={getSortVariant(el)}>
             {el}
           </Button>
         ))}
-        <Button variant={getSortVariant(pages)}>{pages}</Button>
+        <Button onClick={() => setPage(pages)} variant={getSortVariant(pages)}>
+          {pages}
+        </Button>
         <Button disabled={!next && true} onClick={() => onNext()} variant={'secondary'}>
           next
         </Button>
@@ -45,7 +57,11 @@ export const Pagination = ({ info, onNext, onPrev, page, setPage }: PagiantionPr
       <Button disabled={!prev && true} onClick={() => onPrev()} variant={'secondary'}>
         prev
       </Button>
-      {page !== 1 && <Button variant={getSortVariant(1)}>{1}</Button>}
+      {page !== 1 && (
+        <Button onClick={() => setPage(1)} variant={getSortVariant(1)}>
+          {1}
+        </Button>
+      )}
       {page > 3 && <>...</>}
       {page - 1 > 1 &&
         arrayRange(page - 1, page - 1, 1).map(el => (
