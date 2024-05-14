@@ -2,9 +2,22 @@ import { baseApi } from './base-api'
 
 const charactersApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getCharacters: builder.query<basicResponse<Character>, void>({
-      query: () => {
+    getCharacters: builder.query<basicResponse<Character>, CharactersArgs>({
+      providesTags: ['Chars'],
+      query: params => {
+        const refined = Object.fromEntries(
+          Object.entries(params).filter(
+            ([_, value]: any[]) =>
+              !(
+                value === undefined ||
+                value === null ||
+                (typeof value === 'string' && !value.length)
+              )
+          )
+        )
+
         return {
+          params: refined,
           url: '/character',
         }
       },
@@ -14,43 +27,43 @@ const charactersApi = baseApi.injectEndpoints({
 
 export const { useGetCharactersQuery } = charactersApi
 
-export type CharactersArgs = Partial<
+export type CharactersArgs = { page: number } & Partial<
   Pick<Character, 'gender' | 'name' | 'species' | 'status' | 'type'>
 >
 
 export type basicResponse<T> = {
   info: Info
-  result: T[]
+  results: T[]
 }
 
 export type Character = {
   created: string
   episode: string[]
-  gender: 'Female' | 'Genderless' | 'Male' | 'unknown'
+  gender: 'Female' | 'Genderless' | 'Male' | 'unknown' | null
   id: number
   image: string
   location: Location
-  name: string
+  name: null | string
   origin: Origin
-  species: string
-  status: 'Alive' | 'Dead' | 'unknown'
-  type: string
+  species: null | string
+  status: 'Alive' | 'Dead' | 'unknown' | null
+  type: null | string
   url: string
 }
 
 type Origin = {
-  link: string
   name: string
+  url: string
 }
 
 type Location = {
-  link: string
   name: string
+  url: string
 }
 
-type Info = {
+export type Info = {
   count: number
-  next: string
+  next: null | string
   pages: number
-  prev: string
+  prev: null | string
 }
