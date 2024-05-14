@@ -1,13 +1,13 @@
 import { Provider } from 'react-redux'
 
-import { Router } from '@/router'
-
+import { Layout } from './components/Layout/Layout'
 import { store } from './services/store'
 
 export function App() {
   return (
     <Provider store={store}>
-      <Router />
+      {/* <Router /> */}
+      <Layout />
     </Provider>
   )
 }
